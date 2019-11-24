@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private float distToGround;
 
@@ -9,21 +9,20 @@ public class PlayerControl : MonoBehaviour
     public float upForce = 1000f;
     public float sidewaysForce = 10f;
 
-    //очки здоровья
-    public static int healthPoints = 5;
-
-    public Collider playerCollider;
-    public Rigidbody playerRb;
+    Collider playerCollider;
+    Rigidbody playerRb;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerCollider = GetComponent<Collider>();
+        playerRb = GetComponent<Rigidbody>();
+
         distToGround = playerCollider.bounds.extents.y;
-        healthPoints = 5;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //доб. силу тв.телу
         //rigitBode.useGravity = false - чтобы не крутился
@@ -51,6 +50,6 @@ public class PlayerControl : MonoBehaviour
     //для допуска прыжка, чтобы не было doube jumps
     private bool isUpForce()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + .1f);
     }
 }
