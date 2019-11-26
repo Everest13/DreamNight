@@ -7,16 +7,24 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject progressPanel;
 
+    public float offset = 160f;
+
+    Transform player;
+
     private void Start()
     {
+        player = PlayerManager.instance.player.transform;
     }
 
     public void GameOver()
     {
-        //game over sound
-        //call gameover window with restart level button (try again)
+        Debug.Log("Game over");
+
+        gameOverPanel.transform.position = new Vector3(gameOverPanel.transform.position.x, gameOverPanel.transform.position.y, player.position.z + offset);
         gameOverPanel.gameObject.SetActive(true);
         progressPanel.gameObject.SetActive(false);
+
+        //game over sound
     }
 
     public void QuitGame()

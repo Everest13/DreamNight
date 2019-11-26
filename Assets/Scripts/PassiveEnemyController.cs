@@ -2,7 +2,7 @@
 
 public class PassiveEnemyController : Interactable
 {
-    public override float radius { get => 3; set => radius = value; }
+    public override float radius { get => 1; set => radius = value; }
 
     PlayerManager instance;
 

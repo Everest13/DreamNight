@@ -3,29 +3,28 @@ using System.Collections.Generic;
 
 public class CheckHealthPoints : MonoBehaviour
 {
-    List<GameObject> HealthPoints = new List<GameObject>();
+    List<Transform> HealthPoints = new List<Transform>();
 
     void Start()
     {
-        GetComponentsInChildren<GameObject>(true, HealthPoints);
+        GetComponentsInChildren<Transform>(true, HealthPoints);
     }
 
     public void OnUpdateHealthPanel()
     {
         if (HealthPoints != null)
         {
-            foreach (GameObject healthPoint in HealthPoints)
+            foreach (Transform healthPoint in HealthPoints)
             {
                 if (HealthPoints.IndexOf(healthPoint) < PlayerManager.healthPoints)
                 {
-                    healthPoint.SetActive(true);
+                    healthPoint.gameObject.SetActive(true);
                 }
                 else
                 {
-                    healthPoint.SetActive(false);
+                    healthPoint.gameObject.SetActive(false);
                 }
             }
         }
-
     }
 }

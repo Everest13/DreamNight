@@ -10,7 +10,7 @@ public class CurrentScoresUI : MonoBehaviour
         pointText = GetComponent<Text>();
     }
 
-    void OnUpdateCurrentScore()
+    public void OnUpdateCurrentScore()
     {
         pointText.text = "points: " + PlayerManager.currentScores;
     }

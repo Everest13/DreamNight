@@ -18,8 +18,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject player;
 
     GameManager gameManager;
-    CheckHealthPoints healhPointsPanel;
-    CurrentScoresUI currentScoresPanel;
+    PanelManager panelManager;
 
     public static int currentScores = 0;
     public static int finalScores = 0;
@@ -28,9 +27,8 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        panelManager = GetComponent<PanelManager>();
         gameManager = GetComponent<GameManager>();
-        healhPointsPanel = GetComponent<CheckHealthPoints>();
-        currentScoresPanel = GetComponent<CurrentScoresUI>();
 
         currentScores = 0;
         healthPoints = 5;
@@ -38,6 +36,8 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(healthPoints);
+
         if (healthPoints <= 0)
         {
             Die();
@@ -51,14 +51,13 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-
     //TODO: что-то придумать с логикой обработки понтов
     public bool TakePlayerHealthPoint()
     {
         if (healthPoints > 0)
         {
             healthPoints--;
-            healhPointsPanel.OnUpdateHealthPanel();
+            panelManager.OnUpdateHealthPanel();
             return true;
         }
         return false;
@@ -67,7 +66,7 @@ public class PlayerManager : MonoBehaviour
     public bool AddPlayerHealthPoint()
     {
         healthPoints++;
-        healhPointsPanel.OnUpdateHealthPanel();
+        panelManager.OnUpdateHealthPanel();
         return true;
     }
 
@@ -76,7 +75,7 @@ public class PlayerManager : MonoBehaviour
         if (currentScores > 0)
         {
             currentScores--;
-            currentScoresPanel.OnUpdateCurrentScore();
+            panelManager.OnUpdateCurrentScore();
             return true;
         }
             
@@ -86,7 +85,7 @@ public class PlayerManager : MonoBehaviour
     public bool AddCurrentScore()
     {
         currentScores++;
-        currentScoresPanel.OnUpdateCurrentScore();
+        panelManager.OnUpdateCurrentScore();
         return true;
     }
 }
