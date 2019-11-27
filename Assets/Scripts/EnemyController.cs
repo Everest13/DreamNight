@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : AbstractEnemyController
 {
     Transform target;
     NavMeshAgent agent;
     PlayerManager instance;
 
-    public float speed = 1f;
-
-    public float radius = 15f;
-
     private void Start()
     {
         instance = PlayerManager.instance;
-        target = instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+        target = instance.player.transform;
+
     }
 
     private void Update()
