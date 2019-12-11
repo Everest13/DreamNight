@@ -36,7 +36,6 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(healthPoints);
 
         if (healthPoints <= 0)
         {

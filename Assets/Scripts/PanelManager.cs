@@ -12,8 +12,6 @@ public class PanelManager : MonoBehaviour
 
     void Start()
     {
-        // healthPointsParent?.GetComponentsInChildren<Transform>(true, HealthPoints); get 16 transform
-
         for (int i = 0; i < healthPointsParent.transform.childCount; i++)
         {
             HealthPoints.Add(healthPointsParent.transform.GetChild(i));

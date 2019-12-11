@@ -12,11 +12,14 @@ public class Interactable : MonoBehaviour
     
     Transform player;
 
+    void Start()
+    {
+        player = PlayerManager.instance.player.transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        player = PlayerManager.instance.player.transform;
-
         float distance = Vector3.Distance(player.position, interactiontransform.position);
 
         if (distance <= radius && !hasInteracted) //TODO: не уверена в необходимости второго условия

@@ -1,29 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScorePickup : Interactable
+public class ScorePickup : MonoBehaviour
 {
     public Text checkedScores;
 
-    public override float radius { get => 3; set => radius = value; }
-
+    GameObject player;
     PlayerManager instance;
 
     void Start()
     {
         instance = PlayerManager.instance;
+        player = instance.player;
     }
 
-    public override void Interacte()
+    private void OnTriggerEnter(Collider colliderInfo)
     {
-        base.Interacte();
-
-        PickUp();
+        if (colliderInfo.tag == player.tag)
+        {
+            PickUp();
+        }
     }
 
     void PickUp()
     {
-        Debug.Log("Picking up score");
         bool wasPickedUp = instance.AddCurrentScore();
 
         checkedScores.text = "scores: " + PlayerManager.currentScores; //отобразить очки на панели сверху TODO: вынести в скрипт элемента панели
@@ -31,5 +31,6 @@ public class ScorePickup : Interactable
         if (wasPickedUp == true)
             Destroy(transform.gameObject); //уничтожить поинт
     }
+
 
 }
