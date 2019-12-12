@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour //TODO: по хорошему вын�
 
     public GameObject player;
 
+    public bool isDying = false;
+
     GameManager gameManager;
     PanelManager panelManager;
     Animator animator;
@@ -33,6 +35,7 @@ public class PlayerManager : MonoBehaviour //TODO: по хорошему вын�
         gameManager = GetComponent<GameManager>();
         animator = player.GetComponentInChildren<Animator>();
         playerRb = player.GetComponent<Rigidbody>();
+        isDying = false;
 
         currentScores = 0;
         healthPoints = 5;
@@ -51,6 +54,7 @@ public class PlayerManager : MonoBehaviour //TODO: по хорошему вын�
         finalScores += currentScores;
         animator.SetTrigger("Die");
         playerRb.velocity = Vector3.zero;
+        isDying = true;
 
         gameManager.GameOver();
     }

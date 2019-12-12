@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody playerRb;
     Animator animator;
     Collider playerGPX;
+    PlayerManager instance;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         playerGPX = GetComponentInChildren<Collider>();
+        instance = PlayerManager.instance;
 
         distToGround = playerGPX.bounds.extents.y;
 
@@ -31,6 +33,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (instance.isDying)
+            this.enabled = false;
+
         // Придать ускорение
         if (playerRb.velocity.z < maxSpeed)
             playerRb.AddForce(0, 0, forwardForce * Time.deltaTime);
