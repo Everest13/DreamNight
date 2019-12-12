@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour //TODO: по хорошему вынести логику работы с аниматором(AnimatorController?) и rigitbody
 {
     #region Singletone
 
@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
 
     GameManager gameManager;
     PanelManager panelManager;
+    Animator animator;
+    Rigidbody playerRb;
 
     public static int currentScores = 0;
     public static int finalScores = 0;
@@ -29,6 +31,8 @@ public class PlayerManager : MonoBehaviour
     {
         panelManager = GetComponent<PanelManager>();
         gameManager = GetComponent<GameManager>();
+        animator = player.GetComponentInChildren<Animator>();
+        playerRb = player.GetComponent<Rigidbody>();
 
         currentScores = 0;
         healthPoints = 5;
@@ -36,7 +40,6 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-
         if (healthPoints <= 0)
         {
             Die();
@@ -46,6 +49,9 @@ public class PlayerManager : MonoBehaviour
     public void Die()
     {
         finalScores += currentScores;
+        animator.SetTrigger("Die");
+        playerRb.velocity = Vector3.zero;
+
         gameManager.GameOver();
     }
 

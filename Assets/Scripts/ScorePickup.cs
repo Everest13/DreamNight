@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class ScorePickup : MonoBehaviour
 {
-    public Text checkedScores;
-
     GameObject player;
     PlayerManager instance;
 
@@ -25,8 +23,6 @@ public class ScorePickup : MonoBehaviour
     void PickUp()
     {
         bool wasPickedUp = instance.AddCurrentScore();
-
-        checkedScores.text = "scores: " + PlayerManager.currentScores; //отобразить очки на панели сверху TODO: вынести в скрипт элемента панели
 
         if (wasPickedUp == true)
             Destroy(transform.gameObject); //уничтожить поинт

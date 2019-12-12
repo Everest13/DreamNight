@@ -1,28 +1,38 @@
 ﻿using UnityEngine;
 
-public class PassiveEnemyController : Interactable
+public class PassiveEnemyController : MonoBehaviour
 {
-    public override float radius { get => 1; set => radius = value; }
+    public float radius = 1f;
+    bool hasInteracted = false;
 
     PlayerManager instance;
+    Transform player;
+    Transform enemy;
 
     void Start()
     {
         instance = PlayerManager.instance;
+        player = PlayerManager.instance.player.transform;
+        enemy = GetComponent<Transform>();
     }
 
-    public override void Interacte()
+    // Update is called once per frame
+    void Update()
     {
-        base.Interacte();
+        float distance = Vector3.Distance(player.position, enemy.position);
 
-        PassiveAttack();
-
-        //Уничтожить passive enemy
-        Destroy(transform.gameObject);
+        if (distance <= radius && !hasInteracted)
+        {
+            PassiveAttack();
+            hasInteracted = true;
+        }
     }
 
     void PassiveAttack()
     {
         instance.TakePlayerHealthPoint();
+        Destroy(transform.gameObject);
     }
+
+
 }

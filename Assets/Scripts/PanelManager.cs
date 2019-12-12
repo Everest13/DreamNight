@@ -5,8 +5,19 @@ using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
+    #region Singletone
+
+    public static PanelManager instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+
     public GameObject healthPointsParent;
-    public Text showCurrentScores;
+    public Text currentScoresUI;
 
     List<Transform> HealthPoints = new List<Transform>();
 
@@ -38,6 +49,6 @@ public class PanelManager : MonoBehaviour
 
     public void OnUpdateCurrentScore()
     {
-        showCurrentScores.text = "points: " + PlayerManager.currentScores;
+        currentScoresUI.text = "points: " + PlayerManager.currentScores;
     }
 }

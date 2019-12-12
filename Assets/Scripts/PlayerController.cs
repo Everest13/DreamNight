@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     private float distToGround;
 
-    public float forwardForce = 600f;
-    public float sidewaysForce = 10f;
-    public float jumpSpeed = 20f;
+    public float forwardForce = 150f;
+    public float sidewaysForce = 15f;
+    public float maxSpeed = 8f; //TODO: алгоритм скорости в зависиости от уровня
+    public float startSpeed = 2f;
 
     Rigidbody playerRb;
     Animator animator;
@@ -23,16 +24,18 @@ public class PlayerController : MonoBehaviour
         playerGPX = GetComponentInChildren<Collider>();
 
         distToGround = playerGPX.bounds.extents.y;
+
+        playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, startSpeed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //доб. силу тв.телу
-        //rigitBode.useGravity = false - чтобы не крутился
-        playerRb.AddForce(0, 0, forwardForce * Time.deltaTime);
+        // Придать ускорение
+        if (playerRb.velocity.z < maxSpeed)
+            playerRb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
-        //прыжок
+        // Прыжок
         if (Input.GetKeyDown(KeyCode.W) && isUpForce())
         {
             animator.SetTrigger("Jump");
@@ -41,7 +44,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Move");
         }
 
-        //движение вправо, влево
+        // вижение вправо, влево
         if (Input.GetKey(KeyCode.D)) //If the player is pressing "d" key
         {
             playerRb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
