@@ -4,14 +4,10 @@ using UnityEngine;
 
 public abstract class AbstractEnemyController : MonoBehaviour
 {
-    public float speed = 1f;
+    public float moveSpeed = 6f;
 
     public float radius = 15f;
 
+    public float attackRadius = 1f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

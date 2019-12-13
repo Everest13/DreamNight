@@ -5,33 +5,37 @@ using UnityEngine.AI;
 
 public class EnemyController : AbstractEnemyController
 {
-    Transform target;
+    Transform player;
     NavMeshAgent agent;
     PlayerManager instance;
+    Animator animator;
 
     private void Start()
     {
         instance = PlayerManager.instance;
-        agent = GetComponent<NavMeshAgent>();
-        target = instance.player.transform;
+        player = instance.player.transform;
 
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector3.Distance(player.position, transform.position);
+
+        float moveRadius = radius / distance;
+
+        animator.SetFloat("checkState", moveRadius);
 
         if (distance < radius)
         {
-            agent.SetDestination(target.position);
+            agent.speed = moveSpeed;
+            agent.SetDestination(player.position);
             FaceTarget();
-            OnAttack();
+
+            if (distance < attackRadius)
+                OnAttack();
         }
-        else
-        {
-            agent.isStopped = true;
-        }
-        
     }
 
     void OnAttack()
@@ -43,7 +47,7 @@ public class EnemyController : AbstractEnemyController
 
     void FaceTarget()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
