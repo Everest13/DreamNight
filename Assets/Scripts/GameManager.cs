@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,18 +10,18 @@ public class GameManager : MonoBehaviour
 
     public float offset = 160f;
 
-    private void Start()
-    {
-    }
-
     public void GameOver()
     {
         Debug.Log("Game over");
 
+        gameOverPanel.GetComponent<AudioSource>().Play();
         gameOverPanel.gameObject.SetActive(true);
         progressPanel.gameObject.SetActive(false);
+    }
 
-        //game over sound
+    public void StartGame()
+    {
+
     }
 
     public void QuitGame()

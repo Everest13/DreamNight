@@ -12,10 +12,13 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 8f; //TODO: алгоритм скорости в зависиости от уровня
     public float startSpeed = 2f;
 
+    private float clipLenth = 1f;
+
     Rigidbody playerRb;
     Animator animator;
     Collider playerGPX;
     PlayerManager instance;
+    AudioSource audioData;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         playerGPX = GetComponentInChildren<Collider>();
         instance = PlayerManager.instance;
+        audioData = GetComponent<AudioSource>();
 
         distToGround = playerGPX.bounds.extents.y;
 
@@ -31,7 +35,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (instance.isDying)
             this.enabled = false;
@@ -44,7 +48,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && isUpForce())
         {
             animator.SetTrigger("Jump");
-        } else
+            audioData.mute = true;
+
+            StartCoroutine(MuteSteps());
+        }
+        else
         {
             animator.SetTrigger("Move");
         }
@@ -61,10 +69,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private IEnumerator MuteSteps()
+    {
+        yield return new WaitForSeconds(clipLenth); //TODO: сложить реальную длинну анимац клипа
+        audioData.mute = false;
+    }
+
     //проверяет расстояние до платформы
     //для допуска прыжка, чтобы не было doube jumps
     private bool isUpForce()
     {
+        audioData.mute = true;
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + .1f);
     }
 }

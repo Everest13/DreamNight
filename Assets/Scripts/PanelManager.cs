@@ -17,12 +17,21 @@ public class PanelManager : MonoBehaviour
     #endregion
 
     public GameObject healthPointsParent;
-    public Text currentScoresUI;
+    public GameObject scoresPanel;
+
+    Text currentScoresUI;
 
     List<Transform> HealthPoints = new List<Transform>();
 
+    AudioSource audioTakeHealth;
+    AudioSource audioTakeScore;
+
     void Start()
     {
+        currentScoresUI = scoresPanel.GetComponentInChildren<Text>();
+        audioTakeScore = scoresPanel.GetComponent<AudioSource>();
+        audioTakeHealth = healthPointsParent.GetComponent<AudioSource>();
+
         for (int i = 0; i < healthPointsParent.transform.childCount; i++)
         {
             HealthPoints.Add(healthPointsParent.transform.GetChild(i));
@@ -31,6 +40,8 @@ public class PanelManager : MonoBehaviour
 
     public void OnUpdateHealthPanel()
     {
+        audioTakeHealth.Play();
+
         if (HealthPoints != null)
         {
             foreach (Transform healthPoint in HealthPoints)
@@ -49,6 +60,7 @@ public class PanelManager : MonoBehaviour
 
     public void OnUpdateCurrentScore()
     {
+        audioTakeScore.Play();
         currentScoresUI.text = "points: " + PlayerManager.currentScores;
     }
 }

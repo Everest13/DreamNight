@@ -9,12 +9,16 @@ public class EnemyController : AbstractEnemyController
     NavMeshAgent agent;
     PlayerManager instance;
     Animator animator;
+    AudioSource audioData;
+
+    private float attackRadius = 2f;
+    private Vector3 offset = new Vector3(4f, 4f, 4f);
 
     private void Start()
     {
         instance = PlayerManager.instance;
         player = instance.player.transform;
-
+        audioData = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
     }
@@ -22,13 +26,15 @@ public class EnemyController : AbstractEnemyController
     private void Update()
     {
         float distance = Vector3.Distance(player.position, transform.position);
-
         float moveRadius = radius / distance;
 
         animator.SetFloat("checkState", moveRadius);
 
         if (distance < radius)
         {
+            if (!audioData.isPlaying)
+                PlayAudioData(moveRadius);
+
             agent.speed = moveSpeed;
             agent.SetDestination(player.position);
             FaceTarget();
@@ -36,14 +42,26 @@ public class EnemyController : AbstractEnemyController
             if (distance < attackRadius)
                 OnAttack();
         }
+        else
+        {
+            if (audioData.isPlaying)
+                audioData.Stop();
+        }
     }
 
     void OnAttack()
     {
         // take scores from player
         instance.TakeCurrentScore();
+        agent.SetDestination(player.position - offset);
     }
 
+    private void PlayAudioData(float moveRadius)
+    {
+        audioData.pitch = Random.Range(0.6f, 1f);
+        audioData.volume = moveRadius * .1f;
+        audioData.Play();
+    }
 
     void FaceTarget()
     {

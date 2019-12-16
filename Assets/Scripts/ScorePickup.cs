@@ -5,9 +5,11 @@ public class ScorePickup : MonoBehaviour
 {
     GameObject player;
     PlayerManager instance;
+    AudioSource audioData;
 
     void Start()
     {
+        audioData = GetComponentInParent<AudioSource>();
         instance = PlayerManager.instance;
         player = instance.player;
     }
@@ -25,8 +27,7 @@ public class ScorePickup : MonoBehaviour
         bool wasPickedUp = instance.AddCurrentScore();
 
         if (wasPickedUp == true)
+            audioData.Play();
             Destroy(transform.gameObject); //уничтожить поинт
     }
-
-
 }

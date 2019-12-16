@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PassiveEnemyController : MonoBehaviour
 {
     public float radius = 1f;
-    bool hasInteracted = false;
 
     PlayerManager instance;
     Transform player;
@@ -21,10 +21,9 @@ public class PassiveEnemyController : MonoBehaviour
     {
         float distance = Vector3.Distance(player.position, enemy.position);
 
-        if (distance <= radius && !hasInteracted)
+        if (distance <= radius)
         {
             PassiveAttack();
-            hasInteracted = true;
         }
     }
 
@@ -33,6 +32,4 @@ public class PassiveEnemyController : MonoBehaviour
         instance.TakePlayerHealthPoint();
         Destroy(transform.gameObject);
     }
-
-
 }

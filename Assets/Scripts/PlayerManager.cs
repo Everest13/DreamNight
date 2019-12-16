@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour //TODO: по хорошему вын�
 
     void Update()
     {
-        if (healthPoints <= 0)
+        if (healthPoints <= 0 && !isDying)
         {
             Die();
         }
@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour //TODO: по хорошему вын�
         animator.SetTrigger("Die");
         playerRb.velocity = Vector3.zero;
         isDying = true;
+        player.GetComponent<AudioSource>().Stop();
 
         gameManager.GameOver();
     }
