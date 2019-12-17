@@ -10,5 +10,6 @@ public class FinalScoresUI : MonoBehaviour
     {
         pointsText = GetComponent<Text>();
         pointsText.text = "POINTS: " + PlayerManager.finalScores;
+        Debug.Log(pointsText.text);
     }
 }
