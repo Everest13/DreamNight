@@ -7,13 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverPanel;
     public GameObject progressPanel;
+    public GameObject rulesPanel;
 
     public float offset = 160f;
 
     public void GameOver()
     {
-        Debug.Log("Game over");
-
         gameOverPanel.GetComponent<AudioSource>().Play();
         gameOverPanel.gameObject.SetActive(true);
         progressPanel.gameObject.SetActive(false);
@@ -21,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()
@@ -32,5 +31,15 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowRules()
+    {
+        rulesPanel.SetActive(true);
+    }
+
+    public void HideRules()
+    {
+        rulesPanel.SetActive(false);
     }
 }

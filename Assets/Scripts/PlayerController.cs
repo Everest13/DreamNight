@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        //animator.SetTrigger("Move");
+
         playerGPX = GetComponentInChildren<Collider>();
         instance = PlayerManager.instance;
         audioData = GetComponent<AudioSource>();
